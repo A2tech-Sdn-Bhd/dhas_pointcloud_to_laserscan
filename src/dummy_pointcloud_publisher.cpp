@@ -46,8 +46,10 @@ int main(int argc, char * argv[])
   rclcpp::init(argc, argv);
 
   auto node = std::make_shared<rclcpp::Node>("dummy_pointcloud_publisher");
+  // Set QoS to reliable
+  auto reliable_qos = rclcpp::QoS(10).reliable();
   auto pub =
-    node->create_publisher<sensor_msgs::msg::PointCloud2>("cloud", rclcpp::SensorDataQoS());
+    node->create_publisher<sensor_msgs::msg::PointCloud2>("cloud", reliable_qos);
 
   sensor_msgs::msg::PointCloud2 dummy_cloud;
   sensor_msgs::PointCloud2Modifier modifier(dummy_cloud);

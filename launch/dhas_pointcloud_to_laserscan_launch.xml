@@ -1,0 +1,34 @@
+<launch>
+
+  <!-- Launch argument -->
+  <arg
+    name="scanner"
+    default="scanner"
+    description="Namespace for sample topics" />
+
+
+  <!-- PointCloud to LaserScan -->
+  <node
+    pkg="pointcloud_to_laserscan"
+    exec="pointcloud_to_laserscan_node"
+    name="pointcloud_to_laserscan">
+
+    <remap from="cloud_in" to="velodyne_points"/>
+    <remap from="scan" to="scan"/>
+
+    <param name="target_frame" value="scan"/>
+    <param name="transform_tolerance" value="0.01"/>
+    <param name="min_height" value="0.0"/>
+    <param name="max_height" value="1.0"/>
+    <param name="angle_min" value="-1.5708"/>
+    <param name="angle_max" value="1.5708"/>
+    <param name="angle_increment" value="0.0087"/>
+    <param name="scan_time" value="0.3333"/>
+    <param name="range_min" value="0.45"/>
+    <param name="range_max" value="60.0"/>
+    <param name="use_inf" value="false"/>
+    <param name="inf_epsilon" value="1.0"/>
+
+  </node>
+
+</launch>
