@@ -1,42 +1,5 @@
 <launch>
 
-  <!-- Launch argument -->
-  <arg
-    name="scanner"
-    default="scanner"
-    description="Namespace for sample topics" />
-
-
-
-  <!-- Launch argument -->
-  <arg
-    name="scanner"
-    default="scanner"
-    description="Namespace for sample topics" />
-
-  <!-- Dummy pointcloud publisher -->
-  <node
-    pkg="pointcloud_to_laserscan"
-    exec="dummy_pointcloud_publisher"
-    name="cloud_publisher">
-
-    <remap from="cloud" to="$(var scanner)/cloud"/>
-
-    <param name="cloud_frame_id" value="cloud"/>
-    <param name="cloud_extent" value="2.0"/>
-    <param name="cloud_size" value="500"/>
-
-  </node>
-
-  <!-- Static TF publisher -->
-  <node
-    pkg="tf2_ros"
-    exec="static_transform_publisher"
-    name="static_transform_publisher"
-    args="--x 0 --y 0 --z 0
-          --qx 0 --qy 0 --qz 0 --qw 1
-          --frame-id map --child-frame-id cloud" />
-
 
   <!-- PointCloud to LaserScan -->
   <node
@@ -44,10 +7,10 @@
     exec="pointcloud_to_laserscan_node"
     name="pointcloud_to_laserscan">
 
-    <remap from="cloud_in" to="$(var scanner)/cloud"/>
-    <remap from="scan" to="$(var scanner)/scan"/>
+    <remap from="cloud_in" to="velodyne_points"/>
+    <remap from="scan" to="scan"/>
 
-    <param name="target_frame" value="cloud"/>
+    <param name="target_frame" value="scan"/>
     <param name="transform_tolerance" value="0.01"/>
     <param name="min_height" value="0.0"/>
     <param name="max_height" value="1.0"/>
